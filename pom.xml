@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <scm>
+    <connection>scm:git:git://github.com/oconn/domestic.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/oconn/domestic.git</developerConnection>
+    <url>https://github.com/oconn/domestic</url>
+    <tag>HEAD</tag>
+  </scm>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>oconn</groupId>
+  <artifactId>domestic</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>domestic</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.clojure</groupId>
+      <artifactId>clojure</artifactId>
+      <version>1.10.1</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+  </build>
+  <repositories>
+    <repository>
+      <id>clojars</id>
+      <url>https://repo.clojars.org/</url>
+    </repository>
+  </repositories>
+</project>
