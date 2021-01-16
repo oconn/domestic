@@ -3,6 +3,5 @@
 
 (defn bind-dispatcher
   "Binds a domestic dispathcer to it's state."
-  ([dispatcher state] (bind-dispatcher dispatcher state {}))
-  ([dispatcher state context]
-   #(apply dispatcher (first %) state context (rest %))))
+  [dispatcher state & constants]
+  #(apply dispatcher (first %) state (into (vec constants) (rest %))))
