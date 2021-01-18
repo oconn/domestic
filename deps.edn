@@ -1,8 +1,10 @@
 {:deps {}
  :paths ["src"]
  :aliases {:test
-           {:extra-deps {olical/cljs-test-runner {:mvn/version "3.5.0"}}
-            :extra-paths ["test"]
+           {:extra-paths ["test"]
+            :extra-deps {olical/cljs-test-runner {:mvn/version "3.8.0"}
+                         reagent/reagent {:mvn/version "1.0.0"}
+                         lilactown/helix {:mvn/version "0.0.13"}}
             :main-opts ["-m" "cljs-test-runner.main"]}
 
            :pack

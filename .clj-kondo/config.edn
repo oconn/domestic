@@ -1,0 +1,3 @@
+{:lint-as {helix.core/defnc clojure.core/defn
+           domestic.core/defdispatcher clojure.core/defmulti
+           domestic.core/defevent clojure.core/defmethod}}

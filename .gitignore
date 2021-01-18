@@ -1,2 +1,6 @@
 app.jar
 .cpcache
+.nrepl-port
+cljs-test-runner-out/
+node_modules
+.clj-kondo/.cache/
