@@ -1,5 +1,8 @@
 # Domestic
 
+![Tests](https://github.com/oconn/domestic/workflows/Tests/badge.svg)
+[![Clojars Project](https://img.shields.io/clojars/v/oconn/domestic.svg)](https://clojars.org/oconn/domestic)
+
 Time to bring your state home.
 
 ## About
