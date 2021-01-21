@@ -199,3 +199,16 @@
       (.click add-user-btn)
       (.click add-user-btn)
       (t/is (= 6 (count (get-list)))))))
+
+(t/deftest simple-testing-example
+  (sut/defdispatcher dispatcher {})
+
+  (sut/defevent dispatcher :inc
+    [state]
+    (swap! state inc)
+    nil)
+
+  (let [state (atom 0)
+        dispatch (sut/bind-dispatcher dispatcher state)]
+    (t/is (= 1 (dispatch [:inc])))
+    (t/is (= 1 @state))))
