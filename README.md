@@ -9,7 +9,7 @@ Time to bring your state home.
 
 Global state management is great! Then again, sometimes it's not... Domestic is a tiny library that simplifies local state management in clojurescript applications.
 
-If you're fimilar with [re-frame](https://github.com/day8/re-frame), domestic will feel similar. Its APIs we're inspired by `re-frame`, but are designed to be much more simplistic without features like middleware and interceptors. In the end, the overarching ideas are the same;
+If you're fimilar with [re-frame](https://github.com/day8/re-frame), domestic will feel similar. Its APIs were inspired by `re-frame`, but are designed to be much more simplistic without features like middleware and interceptors. In the end, the overarching ideas are the same;
 
 1) Define state
 1) Trigger an event
@@ -18,7 +18,7 @@ If you're fimilar with [re-frame](https://github.com/day8/re-frame), domestic wi
 
 ### Goals for domestic
 
-- Develop a clean and consistent pattern for managing local state when it's the choice.
+- Develop a clean and consistent pattern for managing local state.
 - Ensure ease of testing local state.
 - Flexiblility to work with all clojurescript libraries that support reactive atoms (reagent, helix, etc...)
 - Small and simple
@@ -44,7 +44,7 @@ The first step to using domestic is to define a dispatcher to process events.
 
 ### `defevent`
 
-Next, define then events responsible for updating state / triggering side-effects.
+Next, define the events responsible for updating state / triggering side-effects.
 
 ```clojure
 (d/defevent my-dispatcher :my-event
@@ -76,7 +76,7 @@ If you want to pass additional data to an event, dispatch your event, passing ad
 (my-dispatcher :my-event your-state {:user "foo"})
 ```
 
-Just like functions, you can pass as many arguments as needed and the event will have access to them
+Just like functions, you can pass as many arguments as needed and the event will have access to them.
 
 ### `bind-dispatcher`
 
@@ -99,7 +99,7 @@ Just like functions, you can pass as many arguments as needed and the event will
   (dispatch [:event-two {:user "2"}]))
 ```
 
-The above example demonstrates how to leverage `bind-dispatcher`. The state atom, and any other number of additional arguments, proxies to each dispatch event (similar to partially applied function). Note that the `dispatch` function expects a vector with it's first argument as the `event-key`.
+The above example demonstrates how to leverage `bind-dispatcher`. The state atom, and any other number of additional arguments, proxies to each dispatch event (similar to a partially applied function). Note that the `dispatch` function expects a vector with it's first argument as the `event-key`.
 
 ### reagent Example
 
@@ -176,7 +176,7 @@ domestic makes it easy to test state changes. Each event will return the derefed
 
 ### clj-kondo support
 
-To get proper linting when using clj-kondo, add the following to your `config.edn`
+To get proper linting when using [`clj-kondo`](https://github.com/borkdude/clj-kondo), add the following to your `config.edn`
 
 ```clojure
 {:lint-as {domestic.core/defdispatcher clojure.core/defmulti
