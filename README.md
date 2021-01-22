@@ -9,7 +9,7 @@ Time to bring your state home.
 
 Global state management is great! Then again, sometimes it's not... Domestic is a tiny library that simplifies local state management in clojurescript applications.
 
-If you're fimilar with [re-frame](https://github.com/day8/re-frame), domestic will feel similar. It's APIs we're inspired by `re-frame`, but are designed to be much more simplistic without features like middleware and interceptors. In the end, the overarching ideas are the same;
+If you're fimilar with [re-frame](https://github.com/day8/re-frame), domestic will feel similar. Its APIs we're inspired by `re-frame`, but are designed to be much more simplistic without features like middleware and interceptors. In the end, the overarching ideas are the same;
 
 1) Define state
 1) Trigger an event
@@ -18,13 +18,10 @@ If you're fimilar with [re-frame](https://github.com/day8/re-frame), domestic wi
 
 ### Goals for domestic
 
-- Develop a clean and consistent pattern for managing local state.
-- Ensure ease of testing  local state.
-- Flexiblility to work with all clojurescript librarys that support reactive atoms (reagent, helix, etc...)
-
-### When is local state the right choice?
-
-I've typcailly been on team "put everything in global state" and still heavily leverage it. Over time, while building larger clojurescript applications, I've noticed that there are instances when putting all state into a global database can be less than favorable and quite verbose. Most of the time it comes down to answering this question - **Do any other components care about this state?**. I've also started to view the global database as a one-to-one local representation of data stored on the server. So if it's not stored on the server, it may very well be a canidate for local state. At the end of the day, these are opinions and demostic is there for you when you decided to reach for local state management and want a clean and consistent solution.
+- Develop a clean and consistent pattern for managing local state when it's the choice.
+- Ensure ease of testing local state.
+- Flexiblility to work with all clojurescript libraries that support reactive atoms (reagent, helix, etc...)
+- Small and simple
 
 ## Install
 
@@ -34,7 +31,7 @@ Install the latest version from clojars in your project.
 
 ## Basic Usage
 
-### defdispatcher
+### `defdispatcher`
 
 The first step to using domestic is to define a dispatcher to process events.
 
@@ -45,7 +42,7 @@ The first step to using domestic is to define a dispatcher to process events.
 (d/defdispatcher my-dispatcher {})
 ```
 
-### defevent
+### `defevent`
 
 Next, define then events responsible for updating state / triggering side-effects.
 
@@ -64,6 +61,8 @@ Dispatching an event is simple. Using the above example you trigger `:my-event` 
 (my-dispatcher :my-event your-state)
 ```
 
+Dispatching manually requires all arguments to be passed to the dispatch function. See `bind-dispatcher` for a better approach.
+
 ### Passing data to an event
 
 If you want to pass additional data to an event, dispatch your event, passing additional arguments.
@@ -79,9 +78,9 @@ If you want to pass additional data to an event, dispatch your event, passing ad
 
 Just like functions, you can pass as many arguments as needed and the event will have access to them
 
-### bind-dispatcher
+### `bind-dispatcher`
 
-`bind-dispatcher` is a helper function that can cut down on boilerplate code when passing around the dispatcher. It's first argument is your state atom and then any number of additional arguments that you want to partial to all events.
+`bind-dispatcher` is a helper function that can cut down on boilerplate code when passing around the dispatcher. It's first argument is your state atom and then any number of additional arguments that you want to pass to all events.
 
 ```clojure
 (d/defdispatcher my-dispatcher {})
@@ -100,7 +99,7 @@ Just like functions, you can pass as many arguments as needed and the event will
   (dispatch [:event-two {:user "2"}]))
 ```
 
-The above example show how you can leverage `bind-dispatcher` to partial in the state atom and any other number of additional arguments, proxying them to each dispatch event.
+The above example demonstrates how to leverage `bind-dispatcher`. The state atom, and any other number of additional arguments, proxies to each dispatch event (similar to partially applied function). Note that the `dispatch` function expects a vector with it's first argument as the `event-key`.
 
 ### reagent Example
 
@@ -183,3 +182,8 @@ To get proper linting when using clj-kondo, add the following to your `config.ed
 {:lint-as {domestic.core/defdispatcher clojure.core/defmulti
            domestic.core/defevent clojure.core/defmethod}}
 ```
+
+## Roadmap
+
+1) Optional spec checking post event dispatch (development)
+1) Advacned example added to the readme
