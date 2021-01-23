@@ -81,6 +81,34 @@
         (= 1)
         t/is)))
 
+(sut/defevent test-dispatcher :inc-then-add-two
+  [state]
+  (test-dispatcher :inc state)
+  (when (= 1 (:counter @state))
+    (swap! state update :counter #(+ 2 %))))
+
+(sut/defevent test-dispatcher :add-two-then-inc
+  [state]
+  (swap! state update :counter #(+ 2 %))
+  (when (= 2 (:counter @state))
+    (test-dispatcher :inc state)))
+
+(t/deftest chanining-dispatches
+  (t/testing "triggering state updates within event handlers will process changes in the order they are emitted"
+    (t/is (= 3 (:counter (test-dispatcher :inc-then-add-two (atom {:counter 0})))))
+    (t/is (= 3 (:counter (test-dispatcher :add-two-then-inc (atom {:counter 0})))))
+    (t/is (= 2 (:counter (test-dispatcher :inc-then-add-two (atom {:counter 1})))))))
+
+(sut/defevent test-dispatcher :count-to-five
+  [state]
+  (when (< (:counter @state) 5)
+    (swap! state update :counter inc)
+    (test-dispatcher :count-to-five state)))
+
+(t/deftest recursively-event-dispatches
+  (t/testing "can recursively emit events"
+    (t/is (= 5 (:counter (test-dispatcher :count-to-five (atom {:counter 0})))))))
+
 (def reagent-window (.-window (new-dom)))
 (set! (.-window js/global) reagent-window)
 

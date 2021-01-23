@@ -101,6 +101,33 @@ Just like functions, you can pass as many arguments as needed and the event will
 
 The above example demonstrates how to leverage `bind-dispatcher`. The state atom, and any other number of additional arguments, proxies to each dispatch event (similar to a partially applied function). Note that the `dispatch` function expects a vector with it's first argument as the `event-key`.
 
+### Chaining Events
+
+To dispatch another event (or recursively dispatch the same event), call the dispatcher directly, passing all required props.
+
+```clojure
+(d/defdispatcher dispatcher {})
+
+(d/defevent dispatcher :inc
+  [counter]
+  (swap! counter inc))
+
+(d/defevent dispatcher :inc-then-inc
+  [counter]
+  (swap! counter inc)
+  (dispatcher :inc counter))
+```
+
+Emitting `:inc-then-inc` will increment the counter by one then emit another event that increments the counter again. Events can dispatch to themselves as well.
+
+```clojure
+(d/defevent test-dispatcher :count-to-five
+  [state]
+  (when (< @state 5)
+    (swap! state inc)
+    (test-dispatcher :count-to-five state)))
+```
+
 ### reagent Example
 
 ```clojure
